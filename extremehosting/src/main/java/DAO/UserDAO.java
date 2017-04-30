@@ -46,7 +46,7 @@ public class UserDAO {
     public List<Rate> getRates(Long UserId){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<Rate> rates = (List<Rate>) session.createQuery("from Rate").list();
+        List<Rate> rates = (List<Rate>) session.createQuery("FROM Rate R where R.Receiver.Id = "+UserId).list();
         return rates;
     }
 }

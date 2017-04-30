@@ -11,7 +11,6 @@
 
 <% 
     User user = (User) request.getAttribute("user"); 
-    List<Rate> rates = (List<Rate>) request.getAttribute("rates");
  %>
 
 <!DOCTYPE html>
@@ -58,17 +57,21 @@
             <li>
                 <div class="rating">
                     <p>Personal</p>
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                    <% for(float i=0;i<Float.parseFloat(request.getAttribute("media-personal").toString());i++){%>
+                        <span>☆</span>
+                    <%}%>
                     <div class="comment">
                         <table>
-                            <% for(Rate r : rates) { %>
+                            <% for(Rate r : (List<Rate>) request.getAttribute("rate-personal")) { %>
+                                <% if(r.getType() == 0){%>
                                 <tr>
-                                    <th><a href="#home"><img src="img/profile.png" width="50" height="50" /><%=r.getSender().getName()%></a></th>
+                                    <th><a href="?id=<%=r.getSender().getId()%>"><img src="img/profile.png" width="50" height="50" /><%=r.getSender().getName()%></a></th>
                                     <th><% for(int i=0;i<r.getValue();i++) {%>☆<%}%></th>
                                 </tr>
                                 <tr>
                                     <td colspan="2"><%=r.getDescription()%></td>
                                 </tr>
+                                <%}%>
                             <% } %>
                         </table>
                     </div>
@@ -77,12 +80,14 @@
             <li>
                 <div class="rating">
                     <p>Guest</p>
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                    <% for(float i=0;i<Float.parseFloat(request.getAttribute("media-guest").toString());i++){%>
+                        <span>☆</span>
+                    <%}%>
                     <div class="comment">
                         <table>
-                            <% for(Rate r : rates) { %>
+                            <% for(Rate r : (List<Rate>) request.getAttribute("rate-guest")) { %>
                                 <tr>
-                                    <th><a href="#home"><img src="img/profile.png" width="50" height="50" /><%=r.getSender().getName()%></a></th>
+                                    <th><a href="?id=<%=r.getSender().getId()%>"><img src="img/profile.png" width="50" height="50" /><%=r.getSender().getName()%></a></th>
                                     <th><% for(int i=0;i<r.getValue();i++) {%>☆<%}%></th>
                                 </tr>
                                 <tr>
@@ -97,12 +102,14 @@
            <li>
                 <div class="rating">
                     <p>Host</p>
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                    <% for(float i=0;i<Float.parseFloat(request.getAttribute("media-host").toString());i++){%>
+                        <span>☆</span>
+                    <%}%>
                     <div class="comment">
                         <table>
-                            <% for(Rate r : rates) { %>
+                            <% for(Rate r : (List<Rate>) request.getAttribute("rate-host")) { %>
                                 <tr>
-                                    <th><a href="#home"><img src="img/profile.png" width="50" height="50" /><%=r.getSender().getName()%></a></th>
+                                    <th><a href="?id=<%=r.getSender().getId()%>"><img src="img/profile.png" width="50" height="50" /><%=r.getSender().getName()%></a></th>
                                     <th><% for(int i=0;i<r.getValue();i++) {%>☆<%}%></th>
                                 </tr>
                                 <tr>

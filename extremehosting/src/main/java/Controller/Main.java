@@ -11,6 +11,7 @@ import Model.User;
 import Util.Database;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,16 +54,37 @@ public class Main extends HttpServlet {
         
         User user = userDAO.getActiveUser(k);
         
-        List<Rate> rates = userDAO.getRates(user.getId());
-    //    User user = new User();
-    //    user.setCity("Rio de Janeiro");
-    //    user.setCountry("Brazil");
-    //    user.setHost(true);
-    //    user.setId(1L);
-    //    user.setName("Igor Palmieri Antunes");
+        List<Rate> rpersonal = new ArrayList();
+        List<Rate> rguest = new ArrayList();
+        List<Rate> rhost = new ArrayList();
+        float tpersonal = 0,tguest = 0,thost = 0;
+        
+        for(Rate r : userDAO.getRates(user.getId())){
+            switch(r.getType()){
+                case 0:
+                    tpersonal += r.getValue();
+                    rpersonal.add(r);
+                    break;
+                case 2:
+                    tguest += r.getValue();
+                    rguest.add(r);
+                    break;
+                case 1:
+                    thost += r.getValue();
+                    rhost.add(r);
+                    break;
+            }
+        }
+
         
         request.setAttribute("user", user);
-        request.setAttribute("rates", rates);
+        request.setAttribute("rate-personal", rpersonal);
+        request.setAttribute("rate-guest", rguest);
+        request.setAttribute("rate-host", rhost);
+        request.setAttribute("media-personal", (tpersonal/rpersonal.size()));
+        request.setAttribute("media-guest", (tguest/rguest.size()));
+        request.setAttribute("media-host", (thost/rhost.size()));
+        
         request.getRequestDispatcher("/main.jsp").forward(request, response);
     }
 
