@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import DAO.RateDAO;
 import DAO.UserDAO;
 import Model.Rate;
 import Model.User;
@@ -26,40 +27,19 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Main", urlPatterns = {"/main"})
 public class Main extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    
-    UserDAO userDAO = null;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        Long k;
-        try{
-            k = Long.parseLong(request.getParameter("id"));
-        }
-        catch(java.lang.NumberFormatException e){
-            k = 2L;
-        }
         
-        if(userDAO == null)
-            userDAO = Database.FillDB();
-        
-        User user = userDAO.getActiveUser(k);
+        User user = UserDAO.getActiveUser((String)request.getAttribute("username"));
         
         List<Rate> rpersonal = new ArrayList();
         List<Rate> rguest = new ArrayList();
         List<Rate> rhost = new ArrayList();
         float tpersonal = 0,tguest = 0,thost = 0;
         
-        for(Rate r : userDAO.getRates(user.getId())){
+        for(Rate r : RateDAO.getRates(user.getId())){
             switch(r.getType()){
                 case 0:
                     tpersonal += r.getValue();

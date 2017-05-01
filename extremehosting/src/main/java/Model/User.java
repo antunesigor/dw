@@ -19,11 +19,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {
+
+ 
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserId")
     private Long Id;
+    
+    @Column(nullable = false)
+    private String Username;
+    @Column(nullable = false)
+    private String Password;
     
     @Column(nullable = false)
     private String Name;
@@ -50,7 +57,9 @@ public class User implements Serializable {
         return Id;
     }
     public String getName(){
-        return Name;
+        String[] split = Name.split(" ");
+        String reducedName = split[0] + " " + split[split.length-1];
+        return reducedName.substring(0, Math.min(14, reducedName.length()));
     }
     public String getCity() {
         return City;
@@ -76,6 +85,24 @@ public class User implements Serializable {
     } 
     public void setHost(boolean isHost) {
         this.Host = isHost;
+    }
+
+    public String getProfileURL() {
+        if(ProfileURL == null)
+            return "img/profile.png";
+        return ProfileURL;
+    }
+
+    public void setProfileURL(String ProfileURL) {
+        this.ProfileURL = ProfileURL;
+    }
+    
+       public void setUsername(String Username) {
+        this.Username = Username;
+    }
+
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
 }

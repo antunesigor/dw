@@ -54,6 +54,7 @@ public class Rate implements Serializable {
     public int getValue() {
         return Value;
     }
+    
 
     public void setValue(int Value) {
         this.Value = Value;
