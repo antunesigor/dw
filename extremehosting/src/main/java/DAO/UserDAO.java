@@ -20,4 +20,11 @@ public class UserDAO {
         User user = (User) (session.createQuery("from User where Username = ?").setString(0, username).list().get(0));
         return user;
     }
+    
+    public static User getActiveUser(Long id){
+        Session session = HibernateSessionFactory.getSession(); 
+        session.beginTransaction();
+        User user = (User) session.load(User.class,id);
+        return user;
+    }
 }

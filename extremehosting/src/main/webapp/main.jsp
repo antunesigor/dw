@@ -66,7 +66,7 @@
                             <% for(Rate r : (List<Rate>) request.getAttribute("rate-personal")) { %>
                                 <% if(r.getType() == 0){%>
                                 <tr>
-                                    <th><a href="?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
+                                    <th><a href="main?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
                                     <th><% for(int i=0;i<r.getValue();i++) {%><img src="img/star.png" height="15" width="15"/><%}%></th>
                                 </tr>
                                 <tr>
@@ -88,7 +88,7 @@
                         <table>
                             <% for(Rate r : (List<Rate>) request.getAttribute("rate-guest")) { %>
                                 <tr>
-                                    <th><a href="?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
+                                    <th><a href="main?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
                                     <th><% for(int i=0;i<r.getValue();i++) {%> <img src="img/star.png" height="15" width="15"/><%}%></th>
                                 </tr>
                                 <tr>
@@ -110,7 +110,7 @@
                         <table>
                             <% for(Rate r : (List<Rate>) request.getAttribute("rate-host")) { %>
                                 <tr>
-                                    <th><a href="?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
+                                    <th><a href="main?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
                                     <th><% for(int i=0;i<r.getValue();i++) {%><img src="img/star.png" height="15" width="15"/><%}%></th>
                                 </tr>
                                 <tr>
@@ -124,14 +124,14 @@
             <li>
                 <div class="rating">
                     <p>Sport Host</p>
-                    <% j=0; for(float i=0;i<Float.parseFloat(request.getAttribute("media-guest").toString());j=i++){%>
+                    <% j=0; for(float i=0;i<Float.parseFloat(request.getAttribute("media-shost").toString());j=i++){%>
                     <img src="img/star.png" height="30" width="30"/>
                     <%} while((j++)<4) { %> <img src="img/star_off.png" height="30" width="30"/> <%}%>
                     <div class="comment">
                         <table>
-                            <% for(Rate r : (List<Rate>) request.getAttribute("rate-host")) { %>
+                            <% for(Rate r : (List<Rate>) request.getAttribute("rate-shost")) { %>
                                 <tr>
-                                    <th><a href="?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
+                                    <th><a href="main?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
                                     <th><% for(int i=0;i<r.getValue();i++) {%><img src="img/star.png" height="15" width="15"/><%}%></th>
                                 </tr>
                                 <tr>
@@ -145,14 +145,14 @@
             <li>
                 <div class="rating">
                     <p>Sport Guest</p>
-                    <% j=0; for(float i=0;i<Float.parseFloat(request.getAttribute("media-guest").toString());j=i++){%>
+                    <% j=0; for(float i=0;i<Float.parseFloat(request.getAttribute("media-sguest").toString());j=i++){%>
                     <img src="img/star.png" height="30" width="30"/>
                     <%} while((j++)<4) { %> <img src="img/star_off.png" height="30" width="30"/> <%}%>
                     <div class="comment">
                         <table>
-                            <% for(Rate r : (List<Rate>) request.getAttribute("rate-host")) { %>
+                            <% for(Rate r : (List<Rate>) request.getAttribute("rate-sguest")) { %>
                                 <tr>
-                                    <th><a href="?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
+                                    <th><a href="main?id=<%=r.getSender().getId()%>"><img src="<%=r.getSender().getProfileURL()%>" width="50" height="50" /><%=r.getSender().getName()%></a></th>
                                     <th><% for(int i=0;i<r.getValue();i++) {%><img src="img/star.png" height="15" width="15"/><%}%></th>
                                 </tr>
                                 <tr>
