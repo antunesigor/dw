@@ -1,0 +1,16 @@
+Legenda:
+  "+" => Feito
+  "-" => Tem que fazer
+
+Para a primeira etapa:
+  +session
+  -Mais notas (os ususarios nao precisam ter nota para todos os tipos)
+  
+Para a segunda:
+  -Arrumar login para que nao fique na url /login e sim main 
+  -data da avaliacao
+  -formulario de cadastro
+  -tela de nota
+  -lista de usuarios
+  -criacao de estadia
+  ...
