@@ -5,6 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% 
+if(session.getAttribute("authenticated")!=null && session.getAttribute("authenticated").equals(true))
+{
+   response.sendRedirect("main");
+}
+%>
 <!DOCTYPE html>
 <html>
     <head>
