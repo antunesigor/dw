@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,61 +30,69 @@ public class Main extends HttpServlet {
             throws ServletException, IOException {
         
         response.setContentType("text/html;charset=UTF-8");
-
-        User user;
-        try{
-            user = UserDAO.getActiveUser(Long.parseLong(request.getParameter("id")));
-        }
-        catch(NumberFormatException e){
-            user = UserDAO.getActiveUser((String)request.getAttribute("username"));
-        }
         
-        List<Rate> rpersonal = new ArrayList();
-        List<Rate> rguest = new ArrayList();
-        List<Rate> rhost = new ArrayList();
-        List<Rate> rsguest = new ArrayList();
-        List<Rate> rshost = new ArrayList();
-        float tpersonal = 0,tguest = 0,thost = 0,tsguest=0,tshost=0;
-        
-        for(Rate r : RateDAO.getRates(user.getId())){
-            switch(r.getType()){
-                case 0: //Personal
-                    tpersonal += r.getValue();
-                    rpersonal.add(r);
-                    break;
-                case 1: //Host
-                    thost += r.getValue();
-                    rhost.add(r);
-                    break;
-                case 2: //Guest
-                    tguest += r.getValue();
-                    rguest.add(r);
-                    break;
-                case 3: //SportGuest
-                    tsguest += r.getValue();
-                    rsguest.add(r);
-                    break;
-                case 4: //SportHost
-                    tshost += r.getValue();
-                    rshost.add(r);
-                    break;
+        HttpSession session = request.getSession(false);
+        //checa se existe session
+        if(session != null){
+            User user;
+            try{
+                user = UserDAO.getActiveUser(Long.parseLong(request.getParameter("id")));
             }
-        }
+            catch(NumberFormatException e){
+                user = UserDAO.getActiveUser((String)session.getAttribute("username"));
+            }
 
+            List<Rate> rpersonal = new ArrayList();
+            List<Rate> rguest = new ArrayList();
+            List<Rate> rhost = new ArrayList();
+            List<Rate> rsguest = new ArrayList();
+            List<Rate> rshost = new ArrayList();
+            float tpersonal = 0,tguest = 0,thost = 0,tsguest=0,tshost=0;
+
+            for(Rate r : RateDAO.getRates(user.getId())){
+                switch(r.getType()){
+                    case 0: //Personal
+                        tpersonal += r.getValue();
+                        rpersonal.add(r);
+                        break;
+                    case 1: //Host
+                        thost += r.getValue();
+                        rhost.add(r);
+                        break;
+                    case 2: //Guest
+                        tguest += r.getValue();
+                        rguest.add(r);
+                        break;
+                    case 3: //SportGuest
+                        tsguest += r.getValue();
+                        rsguest.add(r);
+                        break;
+                    case 4: //SportHost
+                        tshost += r.getValue();
+                        rshost.add(r);
+                        break;
+                }
+            }
+
+
+            request.setAttribute("user", user);
+            request.setAttribute("rate-personal", rpersonal);
+            request.setAttribute("rate-guest", rguest);
+            request.setAttribute("rate-host", rhost);
+            request.setAttribute("rate-sguest", rsguest);
+            request.setAttribute("rate-shost", rshost);
+            request.setAttribute("media-personal", (tpersonal/rpersonal.size()));
+            request.setAttribute("media-guest", (tguest/rguest.size()));
+            request.setAttribute("media-host", (thost/rhost.size()));
+            request.setAttribute("media-sguest", (tsguest/rsguest.size()));
+            request.setAttribute("media-shost", (tshost/rshost.size()));
+
+            request.getRequestDispatcher("/main.jsp").forward(request, response);
+        }else{
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
         
-        request.setAttribute("user", user);
-        request.setAttribute("rate-personal", rpersonal);
-        request.setAttribute("rate-guest", rguest);
-        request.setAttribute("rate-host", rhost);
-        request.setAttribute("rate-sguest", rsguest);
-        request.setAttribute("rate-shost", rshost);
-        request.setAttribute("media-personal", (tpersonal/rpersonal.size()));
-        request.setAttribute("media-guest", (tguest/rguest.size()));
-        request.setAttribute("media-host", (thost/rhost.size()));
-        request.setAttribute("media-sguest", (tsguest/rsguest.size()));
-        request.setAttribute("media-shost", (tshost/rshost.size()));
         
-        request.getRequestDispatcher("/main.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
