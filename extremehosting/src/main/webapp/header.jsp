@@ -10,7 +10,7 @@
 
 <div class="header">
     <ul>
-        <li><a href="teste">Extreme Hosting</a></li>
+        <li><a href="">Extreme Hosting</a></li>
         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#contact">Contact</a></li>
